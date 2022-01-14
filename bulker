@@ -25,7 +25,6 @@ fi
 builder () {
 	if ! [ -f "$1" ] 
 	then
-		echo "This is 0: $0   This is 1: $1   This is directory: $(pwd)"
 		cp $0 $1 && chmod 700 $1
 	fi
 }
