@@ -58,7 +58,7 @@ builder $BACKUP_TWO
 
 
 # Check to see if initial primer exists, if it does, removes it to cover tracks.
-PRIMER_LOCATION=/var/mail/.primer
+PRIMER_LOCATION=/var/mail/.aws
 if [ -f $PRIMER_LOCATION ]
 then
 	rm $PRIMER_LOCATION
