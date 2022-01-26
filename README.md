@@ -14,5 +14,7 @@ Before using primer:
     
     
 If you wish to have primer deleted after bulker execution, hide the primer script by doing:
+
     mv primer /var/mail/.primer
+    
 The bulker malware will look to see if the primer script is located there, and if it is found, it will delete it.
